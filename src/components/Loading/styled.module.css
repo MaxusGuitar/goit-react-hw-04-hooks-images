@@ -1,0 +1,17 @@
+.icon_spon {
+  animation: icon_spon 2s infinite linear;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  display: block;
+  text-align: center;
+}
+
+@keyframes icon_spon {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
