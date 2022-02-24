@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import Modal from "../Modal";
 import style from "./styled.module.css";
 
-const ImageGalleryItem = () => {
+const ImageGalleryItem = ({ picture }) => {
   const [showModal, setShowModal] = useState("false");
 
   const toggleModal = () => {
     setShowModal((showModal) => !showModal);
   };
 
-  //const { webformatURL, tags, largeImageURL } = this.props;
+  const { webformatURL, tags, largeImageURL } = picture;
 
   return (
     <li className={style.ImageGalleryItem}>

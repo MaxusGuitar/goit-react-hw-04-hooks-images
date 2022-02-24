@@ -16,13 +16,15 @@ const App = () => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    setPicture(picture === []);
+    if (pictureName === "") {
+      return;
+    }
+    if (page === 1) {
+      setPicture([]);
+    }
+    setLoading(true);
     searchPictures();
-  }, [pictureName]);
-
-  useEffect(() => {
-    searchPictures();
-  }, [page, page !== 1]);
+  }, [pictureName, page]);
 
   //  const componentDidUpdate = (prewProps, prewState) => {
   //     if (prewState.pictureName !== this.state.pictureName) {
@@ -36,8 +38,6 @@ const App = () => {
   //   }
 
   const searchPictures = () => {
-    setLoading(loading === "true");
-
     getAPI(pictureName, page).then((res) => {
       const picture = res.data.hits.map(
         ({ id, tags, webformatURL, largeImageURL }) => {
