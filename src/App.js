@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Searchbar from "./components/Seacrhbar";
@@ -12,7 +12,7 @@ import style from "./App.css";
 const App = () => {
   const [pictureName, setPictureName] = useState("");
   const [picture, setPicture] = useState([]);
-  const [loading, setLoading] = useState("false");
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -23,7 +23,26 @@ const App = () => {
       setPicture([]);
     }
     setLoading(true);
-    searchPictures();
+
+    getAPI(pictureName, page).then((res) => {
+      const picture = res.data.hits.map(
+        ({ id, tags, webformatURL, largeImageURL }) => {
+          return { id, tags, webformatURL, largeImageURL };
+        }
+      );
+
+      if (picture.length === 0) {
+        toast.error("There is no picture with that name!");
+        setLoading(false);
+        return;
+      }
+
+      setPicture((c) => ({
+        ...c,
+        ...picture,
+      }));
+      setLoading(false);
+    });
   }, [pictureName, page]);
 
   //  const componentDidUpdate = (prewProps, prewState) => {
@@ -37,39 +56,40 @@ const App = () => {
   //     }
   //   }
 
-  const searchPictures = () => {
-    getAPI(pictureName, page).then((res) => {
-      const picture = res.data.hits.map(
-        ({ id, tags, webformatURL, largeImageURL }) => {
-          return { id, tags, webformatURL, largeImageURL };
-        }
-      );
+  // const searchPictures = () => {
+  //   getAPI(pictureName, page).then((res) => {
+  //     const picture = res.data.hits.map(
+  //       ({ id, tags, webformatURL, largeImageURL }) => {
+  //         return { id, tags, webformatURL, largeImageURL };
+  //       }
+  //     );
 
-      if (picture.length === 0) {
-        setLoading(loading === "false");
-        return toast.error("There is no picture with that name!");
-      }
+  //     if (picture.length === 0) {
+  //       setLoading(loading === "false");
+  //       return toast.error("There is no picture with that name!");
+  //     }
 
-      setPicture((c) => ({
-        ...c,
-        ...picture,
-      }));
-      setLoading(loading === "false");
-    });
-  };
+  //     setPicture((c) => ({
+  //       ...c,
+  //       ...picture,
+  //     }));
+  //     setLoading(loading === "false");
+  //   });
+  // };
 
   const handleFormSubmit = (pictureName) => {
     setPictureName(pictureName);
+    setPage(1);
   };
 
   const loadMoreBtn = () => {
-    setPage(() => page + 1);
+    setPage((pp) => pp + 1);
   };
 
   return (
     <div>
       <Searchbar onSubmit={handleFormSubmit} />
-      <ImageGallery picture={picture} />
+      {picture.length > 0 && <ImageGallery picture={picture} />}
       <ToastContainer autoClose={3000} />
       {loading ? (
         <Loading />

@@ -7,16 +7,7 @@ export default function ImageGallery({ picture }) {
   return (
     <ul className={style.ImageGallery}>
       {picture.length > 0 &&
-        picture.map(({ id, webformatURL, largeImageURL, tags }) => {
-          return (
-            <ImageGalleryItem
-              key={id}
-              webformatURL={webformatURL}
-              largeImageURL={largeImageURL}
-              tags={tags}
-            />
-          );
-        })}
+        picture.map((p) => <ImageGalleryItem key={p.id} p={p} />)}
     </ul>
   );
 }
