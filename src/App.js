@@ -37,45 +37,10 @@ const App = () => {
         return;
       }
 
-      setPicture((c) => ({
-        ...c,
-        ...picture,
-      }));
+      setPicture((c) => [...c, ...picture]);
       setLoading(false);
     });
   }, [pictureName, page]);
-
-  //  const componentDidUpdate = (prewProps, prewState) => {
-  //     if (prewState.pictureName !== this.state.pictureName) {
-  //       this.setState({ picture: [] });
-  //       this.searchPictures();
-  //     }
-
-  //     if (prewState.page !== this.state.page && this.state.page !== 1) {
-  //       this.searchPictures();
-  //     }
-  //   }
-
-  // const searchPictures = () => {
-  //   getAPI(pictureName, page).then((res) => {
-  //     const picture = res.data.hits.map(
-  //       ({ id, tags, webformatURL, largeImageURL }) => {
-  //         return { id, tags, webformatURL, largeImageURL };
-  //       }
-  //     );
-
-  //     if (picture.length === 0) {
-  //       setLoading(loading === "false");
-  //       return toast.error("There is no picture with that name!");
-  //     }
-
-  //     setPicture((c) => ({
-  //       ...c,
-  //       ...picture,
-  //     }));
-  //     setLoading(loading === "false");
-  //   });
-  // };
 
   const handleFormSubmit = (pictureName) => {
     setPictureName(pictureName);

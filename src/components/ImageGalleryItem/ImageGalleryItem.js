@@ -10,7 +10,7 @@ const ImageGalleryItem = ({ p }) => {
     setShowModal((showModal) => !showModal);
   };
 
-  const { webformatURL, tags, largeImageURL, id } = p;
+  const { webformatURL, tags, id } = p;
 
   return (
     <li key={id} className={style.ImageGalleryItem}>
@@ -20,9 +20,7 @@ const ImageGalleryItem = ({ p }) => {
         src={webformatURL}
         alt={tags}
       />
-      {showModal && (
-        <Modal photo={largeImageURL} tags={tags} onClose={toggleModal} />
-      )}
+      {showModal && <Modal p={p} onClose={toggleModal} />}
     </li>
   );
 };

@@ -5,7 +5,7 @@ import style from "./modal.module.css";
 
 const modalRoot = document.querySelector("#modal__root");
 
-function Modal({ onClose, a }) {
+const Modal = ({ onClose, p }) => {
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => {
@@ -25,17 +25,17 @@ function Modal({ onClose, a }) {
     }
   };
 
-  const { photo, tags } = a;
+  const { largeImageURL, tags } = p;
 
   return createPortal(
     <div className={style.Overlay} onClick={ahndleBackdropClick}>
       <div className={style.Modal}>
-        <img src={photo} alt={tags} />
+        <img src={largeImageURL} alt={tags} />
       </div>
     </div>,
     modalRoot
   );
-}
+};
 
 Modal.propTypes = {
   onClose: propTypes.func,

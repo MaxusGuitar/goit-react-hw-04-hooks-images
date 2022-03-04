@@ -13,7 +13,7 @@ function Searchbar({ onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
+
     if (pictureName.trim() === "") {
       //trim() - delete spaces
       return toast.warn("Please enter the picture name!");
